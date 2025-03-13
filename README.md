@@ -29,40 +29,46 @@ Lalu kalian bisa mencari ekstensi yang kalian butuhkan, jika ada yang belum diak
 Untuk melakukan instalasi Codeigniter 4 dapat dilakukan dengan dua cara, yaitu cara manual dan menggunakan composer. Pada praktikum ini kita menggunakan cara manual.
 
 * Unduh Codeigniter dari website https://codeigniter.com/download
-Extrak file zip Codeigniter ke direktori htdocs/lab11_ci.
-Ubah nama direktory codeigniter4-framework-v4.x.xx menjadi ci4.
-Buka browser dengan alamat http://localhost/lab11_ci/ci4/public/
+* Extrak file zip Codeigniter ke direktori htdocs/lab11_ci.
+* Ubah nama direktory codeigniter4-framework-v4.x.xx menjadi ci4.
+* Buka browser dengan alamat http://localhost/lab11_ci/ci4/public/
+  
 ![image](https://github.com/user-attachments/assets/608bc518-a8b7-4a7b-a96f-9f3288749278)
 
-Menjalankan CLI (Command Line Interface)
+## Menjalankan CLI (Command Line Interface)
 Codeigniter 4 menyediakan CLI untuk mempermudah proses development. Untuk mengakses CLI buka Shell pada XAMPP.
 
-alt text
+![cmd 2](https://github.com/user-attachments/assets/ce930a98-8274-40ae-b380-d33683edd746)
 
 Arahkan lokasi direktori sesuai dengan direktori kerja project dibuat (Contoh : cd htdocs/lab11_ci/ci4)
 
 Perintah yang dapat dijalankan untuk memanggil CLI Codeigniter adalah:
 
-php spark
-alt text
+### php spark
+![cmd 3](https://github.com/user-attachments/assets/08e1d239-32f2-42dd-a744-8dbbedf250b7)
 
-Mengaktifkan Mode Debugging
+## Mengaktifkan Mode Debugging
 Codeigniter 4 menyediakan fitur debugging untuk memudahkan developer untuk mengetahui pesan error apabila terjadi kesalahan dalam membuat kode program.
 
 Secara default fitur ini belum aktif. Ketika terjadi error pada aplikasi akan ditampilkan pesan kesalahan seperti berikut.
 
-alt text
+![image](https://github.com/user-attachments/assets/0bcf5084-85ce-4bf2-b7fa-e257bccc6e60)
 
-Semua jenis error akan ditampilkan sama. Untuk memudahkan mengetahui jenis errornya, maka perlu diaktifkan mode debugging dengan mengubah nilai konfigurasi pada environment variable CI_ENVIRONMENT menjadi development. alt text
+Semua jenis error akan ditampilkan sama. Untuk memudahkan mengetahui jenis errornya, maka perlu diaktifkan mode debugging dengan mengubah nilai konfigurasi pada environment variable CI_ENVIRONMENT menjadi development. 
+
+![image](https://github.com/user-attachments/assets/4548caf6-bed5-452d-b66a-315d1cc1806f)
 
 Ubah nama file env menjadi .env kemudian buka file tersebut dan ubah nilai variable CI_ENVIRONMENT menjadi development.
 
-Catatan : Kadang, CodeIgniter tidak membaca file .env karena masih dikomentari, pastikan tidak ada tanda # di depan CI_ENVIRONMENT.
-alt text
+### Catatan : Kadang, CodeIgniter tidak membaca file .env karena masih dikomentari, pastikan tidak ada tanda # di depan CI_ENVIRONMENT.
 
-Contoh error yang terjadi. Untuk mencoba error tersebut, ubah kode pada file app/Controller/Home.php hilangkan titik koma pada akhir kode return view('welcome_message'). alt text
+![image](https://github.com/user-attachments/assets/09fbe89c-f19e-4af4-999d-94a854cac9af)
 
-Memahami konsep MVC
+Contoh error yang terjadi. Untuk mencoba error tersebut, ubah kode pada file app/Controller/Home.php hilangkan titik koma pada akhir kode return view('welcome_message'). 
+
+![image](https://github.com/user-attachments/assets/74b6feea-41e2-438b-9725-16865ac1b9b6)
+
+### Memahami konsep MVC
 Codeigniter menggunakan konsep MVC. MVC meripakan singkatan dari Model-View- Controller. MVC merupakan konsep arsitektur yang umum digunakan dalam pengembangan aplikasi. Konsep MVC adalah memisahkan kode program berdasarkan logic proses, data, dan tampilan. Untuk logic proses diletakkan pada direktori Contoller, Objek data diletakkan pada direktori Model, dan desain tampilan diletakkan pada direktori View.
 
 Codeigniter menggunakan konsep pemrograman berorientasi objek dalam mengimplementasikan konsep MVC.
@@ -73,19 +79,22 @@ View merupakan kode program yang berisi bagian yang menangani terkait tampilan u
 
 Controller merupakaan kode program yang berkaitan dengan logic proses yang menghubungkan antara view dan model. Controller berfungsi untuk menerima request dan data dari user kemudian diproses dengan menghubungkan bagian model dan view.
 
-Routing dan Controller
+### Routing dan Controller
 Routing merupakan proses yang mengatur arah atau rute dari request untuk menentukan fungsi/bagian mana yang akan memproses request tersebut. Pada framework CI4, routing bertujuan untuk menentukan Controller mana yang harus merespon sebuah request. Controller adalah class atau script yang bertanggung jawab merespon sebuah request.
 
 Pada Codeigniter, request yang diterima oleh file index.php akan diarahkan ke Router untuk meudian oleh router tesebut diarahkan ke Controller.
 
-Router terletak pada file app/config/Routes.php alt text
+Router terletak pada file app/config/Routes.php 
+
+![image](https://github.com/user-attachments/assets/2dcc1651-c8f0-4f8e-b86d-8b64e018f17d)
 
 Pada file tersebut kita dapat mendefinisikan route untuk aplikasi yang kita buat. Contoh:
 
 $routes->get('/', 'Home::index');
 Kode tersebut akan mengarahkan rute untuk halaman home.
 
-Membuat Route Baru.
+## Membuat Route Baru.
+
 Tambahkan kode berikut di dalam Routes.php
 
 $routes->get('/about', 'Page::about');
@@ -93,9 +102,12 @@ $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
 Untuk mengetahui route yang ditambahkan sudah benar, buka CLI dan jalankan perintah berikut.
 
-php spark routes alt text
+php spark routes 
+![image](https://github.com/user-attachments/assets/394573fa-b8ee-4c5e-98e4-6f4a898eb7aa)
 
-Selanjutnya coba akses route yang telah dibuat dengan mengakses alamat url http://localhost:8080/about alt text
+Selanjutnya coba akses route yang telah dibuat dengan mengakses alamat url http://localhost:8080/about
+
+![image](https://github.com/user-attachments/assets/1f5599b6-ef02-4361-af6a-9be66ed92b9e)
 
 Ketika diakses akan mucul tampilan error 404 file not found, itu artinya file/page tersebut tidak ada. Untuk dapat mengakses halaman tersebut, harus dibuat terlebih dahulu Contoller yang sesuai dengan routing yang dibuat yaitu Contoller Page.
 
@@ -121,7 +133,8 @@ class Page extends BaseController
         echo "Ini halaman FAQ";
     }
 }
-alt text
+![image](https://github.com/user-attachments/assets/6bf57a17-bb44-4d9e-a88c-d5be1ae59fea)
+
 
 Auto Routing
 Secara default fitur autoroute pada Codeiginiter sudah aktif. Untuk mengubah status autoroute dapat mengubah nilai variabelnya. Untuk menonaktifkan ubah nilai true menjadi false.
