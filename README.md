@@ -249,4 +249,3 @@ Kemudian ubah file app/Views/about.php seperti berikut.
 <p><?= $content; ?></p>
 <?= $this->include('template/footer'); ?>
 Selanjutnya refresh tampilan pada alamat http://localhost:8080/about alt text
-
