@@ -93,7 +93,9 @@ Router terletak pada file app/config/Routes.php
 
 Pada file tersebut kita dapat mendefinisikan route untuk aplikasi yang kita buat. Contoh:
 
-'$routes->get('/', 'Home::index');'
+```php
+$routes->get('/', 'Home::index');
+```
 
 Kode tersebut akan mengarahkan rute untuk halaman home.
 
