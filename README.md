@@ -103,9 +103,12 @@ Kode tersebut akan mengarahkan rute untuk halaman home.
 
 Tambahkan kode berikut di dalam Routes.php
 
+```php
 $routes->get('/about', 'Page::about');
 $routes->get('/contact', 'Page::contact');
 $routes->get('/faqs', 'Page::faqs');
+```
+
 Untuk mengetahui route yang ditambahkan sudah benar, buka CLI dan jalankan perintah berikut.
 
 php spark routes 
@@ -120,6 +123,7 @@ Ketika diakses akan mucul tampilan error 404 file not found, itu artinya file/pa
 ### Membuat Controller
 Selanjutnya adalah membuat Controller Page. Buat file baru dengan nama page.php pada direktori Controller kemudian isi kodenya seperti berikut.
 
+```php
 <?php
 
 namespace App\Controllers;
@@ -139,25 +143,32 @@ class Page extends BaseController
         echo "Ini halaman FAQ";
     }
 }
+```
+
 ![image](https://github.com/user-attachments/assets/6bf57a17-bb44-4d9e-a88c-d5be1ae59fea)
 
-
-Auto Routing
+#### Auto Routing
 Secara default fitur autoroute pada Codeiginiter sudah aktif. Untuk mengubah status autoroute dapat mengubah nilai variabelnya. Untuk menonaktifkan ubah nilai true menjadi false.
 
+```php
 $routes->get('page/tos', 'Page::tos');
 $routes->setAutoRoute(true);
-Tambahkan method baru pada Controller Page seperti berikut.
+```
 
+Tambahkan method baru pada Controller Page seperti berikut.
+```php
 public function tos()
 {
     echo "ini halaman Term of Services";
 }
+```
+
 Method ini belum ada pada routing, sehingga cara mengaksesnya dengan menggunakan alamat: http://localhost:8080/page/tos alt text
+![tos](https://github.com/user-attachments/assets/d3df16bb-ae90-4c0d-a3b4-1e09ce025415)
 
-Membuat View
+#### Membuat View
 Selanjutnya adalam membuat view untuk tampilan web agar lebih menarik. Buat file baru dengan nama about.php pada direktori Views (app/Views/about.php) kemudian isi kodenya seperti berikut.
-
+```php
 <!DOCTYPE html>
 <html lang="en">
 
@@ -173,8 +184,9 @@ Selanjutnya adalam membuat view untuk tampilan web agar lebih menarik. Buat file
 </body>
 
 </html>
+```
 Ubah method about pada class Controller Page menjadi seperti berikut:
-
+```php
     public function about()
     {
         return view('about', [
@@ -182,21 +194,22 @@ Ubah method about pada class Controller Page menjadi seperti berikut:
             'content' => 'Ini adalah halaman about yang menjelaskan tentang isi halaman ini.'
         ]);
     }
+```
 Kemudian lakukan refresh pada halaman tersebut.
 
 alt text
 
-Membuat Layout Web dengan CSS
+### Membuat Layout Web dengan CSS
 Pada dasarnya layout web dengan css dapat diimplamentasikan dengan mudah pada codeigniter. Yang perlu diketahui adalah, pada Codeigniter 4 file yang menyimpan asset css dan javascript terletak pada direktori public.
 
 Buat file css pada direktori public dengan nama style.css
 
-alt text
+[alt text](https://github.com/nurulfir/Lab7Web/raw/main/img/style.png)
 
 Kemudian buat folder template pada direktori view kemudian buat file header.php dan footer.php
 
 File app/Views/template/header.php
-
+```php
 <!DOCTYPE html>
 <html lang="en">
 
@@ -219,8 +232,9 @@ File app/Views/template/header.php
         </nav>
         <section id="wrapper">
             <section id="main"></section>
+```
 File app/Views/template/footer.php
-
+```php
 </section>
 <aside id="sidebar">
     <div class="widget-box">
@@ -245,11 +259,249 @@ File app/Views/template/footer.php
 </body>
 
 </html>
+```
 Kemudian ubah file app/Views/about.php seperti berikut.
-
+```php
 <?= $this->include('template/header'); ?>
 <h1><?= $title; ?></h1>
 <hr>
 <p><?= $content; ?></p>
 <?= $this->include('template/footer'); ?>
-Selanjutnya refresh tampilan pada alamat http://localhost:8080/about alt text
+```
+Selanjutnya refresh tampilan pada alamat http://localhost:8080/about 
+![image](https://github.com/user-attachments/assets/ec2ea91f-d2cf-42fa-99ce-04b3e4138483)
+
+Praktikum 2: Framework Lanjutan (CRUD) - CodeIgniter 4
+Tujuan Praktikum
+Memahami konsep dasar penggunaan Model di CodeIgniter.
+
+Mengenal dan menerapkan konsep CRUD (Create, Read, Update, Delete).
+
+Membuat aplikasi sederhana menggunakan Framework CodeIgniter 4.
+
+Persiapan
+Gunakan text editor seperti VSCode.
+
+Buka folder lab7_php_ci yang ada di dalam folder htdocs.
+
+Jalankan XAMPP, lalu aktifkan MySQL Server.
+
+Langkah-Langkah
+1. Membuat Database
+Buat database dan tabel artikel dengan perintah berikut di phpMyAdmin atau terminal MySQL:
+
+sql
+Salin
+Edit
+CREATE DATABASE lab_ci4;
+CREATE TABLE artikel (
+  id INT(11) auto_increment,
+  judul VARCHAR(200) NOT NULL,
+  isi TEXT,
+  gambar VARCHAR(200),
+  status TINYINT(1) DEFAULT 0,
+  slug VARCHAR(200),
+  PRIMARY KEY(id)
+);
+2. Konfigurasi Koneksi Database
+Edit file .env dan sesuaikan pengaturan database sesuai konfigurasi lokal kamu, contohnya:
+
+pgsql
+Salin
+Edit
+database.default.hostname = localhost
+database.default.database = lab_ci4
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+3. Membuat Model
+Buat file ArtikelModel.php di folder app/Models/:
+
+php
+Salin
+Edit
+<?php
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class ArtikelModel extends Model
+{
+    protected $table = 'artikel';
+    protected $primaryKey = 'id';
+    protected $useAutoIncrement = true;
+    protected $allowedFields = ['judul', 'isi', 'status', 'slug', 'gambar'];
+}
+4. Membuat Controller
+Buat file Artikel.php di folder app/Controllers/:
+
+php
+Salin
+Edit
+<?php
+
+namespace App\Controllers;
+use App\Models\ArtikelModel;
+
+class Artikel extends BaseController
+{
+    public function index()
+    {
+        $title = 'Daftar Artikel';
+        $model = new ArtikelModel();
+        $artikel = $model->findAll();
+        return view('artikel/index', compact('artikel', 'title'));
+    }
+}
+5. Membuat View
+Buat folder artikel di dalam app/Views, lalu buat file index.php:
+
+php
+Salin
+Edit
+<?= $this->include('template/header'); ?>
+
+<?php if($artikel): foreach($artikel as $row): ?>
+<article class="entry">
+    <h2><a href="<?= base_url('/artikel/' . $row['slug']); ?>"><?= $row['judul']; ?></a></h2>
+    <img src="<?= base_url('/gambar/' . $row['gambar']); ?>" alt="<?= $row['judul']; ?>">
+    <p><?= substr($row['isi'], 0, 200); ?></p>
+</article>
+<hr class="divider" />
+<?php endforeach; else: ?>
+<article class="entry">
+    <h2>Belum ada data.</h2>
+</article>
+<?php endif; ?>
+
+<?= $this->include('template/footer'); ?>
+Akses halaman ini melalui browser: http://localhost:8080/artikel
+
+6. Menambah Data Artikel
+Tambahkan data manual ke database:
+
+sql
+Salin
+Edit
+INSERT INTO artikel (judul, isi, slug) VALUES
+('Artikel pertama', 'Lorem Ipsum adalah contoh teks atau dummy...', 'artikel-pertama'),
+('Artikel kedua', 'Tidak seperti anggapan banyak orang...', 'artikel-kedua');
+7. Menampilkan Detail Artikel
+Tambahkan method view() di controller Artikel:
+
+php
+Salin
+Edit
+public function view($slug)
+{
+    $model = new ArtikelModel();
+    $artikel = $model->where(['slug' => $slug])->first();
+
+    if (!$artikel) {
+        throw PageNotFoundException::forPageNotFound();
+    }
+
+    $title = $artikel['judul'];
+    return view('artikel/detail', compact('artikel', 'title'));
+}
+Lalu buat file detail.php:
+
+php
+Salin
+Edit
+<?= $this->include('template/header'); ?>
+
+<article class="entry">
+    <h2><?= $artikel['judul']; ?></h2>
+    <img src="<?= base_url('/gambar/' . $artikel['gambar']); ?>" alt="<?= $artikel['judul']; ?>">
+    <p><?= $artikel['isi']; ?></p>
+</article>
+
+<?= $this->include('template/footer'); ?>
+Tambahkan routing di app/Config/Routes.php:
+
+php
+Salin
+Edit
+$routes->get('/artikel/(:any)', 'Artikel::view/$1');
+8. Membuat Halaman Admin
+Tambahkan method admin_index() di controller:
+
+php
+Salin
+Edit
+public function admin_index()
+{
+    $title = 'Daftar Artikel';
+    $model = new ArtikelModel();
+    $artikel = $model->findAll();
+    return view('artikel/admin_index', compact('artikel', 'title'));
+}
+Lalu buat view admin_index.php untuk halaman admin.
+
+Tambahkan grup route untuk admin:
+
+php
+Salin
+Edit
+$routes->group('admin', function($routes) {
+    $routes->get('artikel', 'Artikel::admin_index');
+    $routes->add('artikel/add', 'Artikel::add');
+    $routes->add('artikel/edit/(:any)', 'Artikel::edit/$1');
+    $routes->get('artikel/delete/(:any)', 'Artikel::delete/$1');
+});
+Akses melalui: http://localhost:8080/admin/artikel
+
+9. Menambahkan Artikel Baru
+Tambahkan method add() di controller:
+
+php
+Salin
+Edit
+public function add()
+{
+    $validation = \Config\Services::validation();
+    $validation->setRules(['judul' => 'required']);
+    $isDataValid = $validation->withRequest($this->request)->run();
+
+    if ($isDataValid) {
+        $artikel = new ArtikelModel();
+        $artikel->insert([
+            'judul' => $this->request->getPost('judul'),
+            'isi' => $this->request->getPost('isi'),
+            'slug' => url_title($this->request->getPost('judul')),
+        ]);
+        return redirect('admin/artikel');
+    }
+
+    $title = "Tambah Artikel";
+    return view('artikel/form_add', compact('title'));
+}
+Buat file form_add.php untuk form tambah artikel.
+
+10. Mengedit Artikel
+Tambahkan method edit($id) di controller:
+
+php
+Salin
+Edit
+public function edit($id)
+{
+    $artikel = new ArtikelModel();
+
+    $validation = \Config\Services::validation();
+    $validation->setRules(['judul' => 'required']);
+    $isDataValid = $validation->withRequest($this->request)->run();
+
+    if ($isDataValid) {
+        $artikel->update($id, [
+            'judul' => $this->request->getPost('judul'),
+            'isi' => $this->request->getPost('isi'),
+        ]);
+        return redirect('admin/artikel');
+    }
+
+    $data = $artikel->where('id', $id)->first();
+    $title = "Edit Artikel";
+    return view('artikel/form_edit', compact('title', 'data'));
+}
