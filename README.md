@@ -435,7 +435,7 @@ public function admin_index()
 Lalu buat view admin_index.php untuk halaman admin.
 Tambahkan grup route untuk admin:
 
-``php
+```php
 <?= $this->include('template/admin_header'); ?>
 
 <table class="table">
