@@ -199,14 +199,14 @@ Ubah method about pada class Controller Page menjadi seperti berikut:
 ```
 Kemudian lakukan refresh pada halaman tersebut.
 
-alt text
+![About2](https://github.com/user-attachments/assets/b3078283-2478-4feb-b56a-f49b135101a3)
 
 ### Membuat Layout Web dengan CSS
 Pada dasarnya layout web dengan css dapat diimplamentasikan dengan mudah pada codeigniter. Yang perlu diketahui adalah, pada Codeigniter 4 file yang menyimpan asset css dan javascript terletak pada direktori public.
 
 Buat file css pada direktori public dengan nama style.css
 
-[alt text](https://github.com/nurulfir/Lab7Web/raw/main/img/style.png)
+![style](https://github.com/user-attachments/assets/404feeba-93f0-4a82-aee5-78e8ba6fe4b9)
 
 Kemudian buat folder template pada direktori view kemudian buat file header.php dan footer.php
 
