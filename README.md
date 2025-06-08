@@ -146,7 +146,6 @@ class Page extends BaseController
     }
 }
 ```
-
 ![image](https://github.com/user-attachments/assets/6bf57a17-bb44-4d9e-a88c-d5be1ae59fea)
 
 #### Auto Routing
