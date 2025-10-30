@@ -27,6 +27,7 @@ Lalu kalian bisa mencari ekstensi yang kalian butuhkan, jika ada yang belum diak
 
 ![image](https://github.com/user-attachments/assets/98e59d08-d429-4e81-8d79-ff525d9b89da)
 
+
 ![image](https://github.com/user-attachments/assets/8148e2ab-b664-4482-a306-4f90a4732256)
 
 * Contohnya disini extension=intl belum aktif, maka cara mengaktivasinya adalah dengan menghilangkan tanda ; (titik koma) pada ekstensi yang akan diaktifkan. Kemudian simpan kembali filenya dan restart Apache web server.
